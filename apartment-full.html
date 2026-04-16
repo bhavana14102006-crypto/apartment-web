@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APARTment — Elite Construction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#EEECE8;--bg2:#E5E3DF;--bg3:#D8D6D1;
+  --ink:#141412;--mid:#7A7870;--light:#B0AEA8;
+  --white:#FFFFFF;--dark:#141412;
+  --accent:#C8A96E;--accent2:#8B6F3E;
+  --r:16px;--r2:24px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;min-height:100vh}
+
+/* ─── PAGE SYSTEM ─── */
+.page{display:none;min-height:100vh;animation:pageIn 0.5s cubic-bezier(0.22,1,0.36,1) forwards}
+.page.active{display:block}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── NAV ─── */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 3rem;position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(238,236,232,0.82);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.08em;cursor:pointer;color:var(--ink)}
+.logo span{color:var(--accent);font-size:0.9rem;letter-spacing:0.15em;margin-left:2px}
+.nav-links{display:flex;gap:0.25rem;list-style:none}
+.nav-links a{
+  font-size:0.78rem;font-weight:400;color:var(--mid);text-decoration:none;
+  letter-spacing:0.06em;text-transform:uppercase;padding:0.5rem 0.9rem;
+  border-radius:100px;transition:all 0.2s;cursor:pointer;
+}
+.nav-links a:hover,.nav-links a.active{background:var(--ink);color:var(--white)}
+.nav-right{display:flex;gap:0.75rem;align-items:center}
+.nav-login{
+  background:transparent;color:var(--mid);border:1px solid rgba(0,0,0,0.15);
+  padding:0.55rem 1.2rem;border-radius:100px;font-family:'DM Sans',sans-serif;
+  font-size:0.78rem;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;
+  cursor:pointer;transition:all 0.2s;
+}
+.nav-login:hover{background:var(--bg3);color:var(--ink)}
+.nav-cta{
+  background:var(--ink);color:var(--white);border:none;
+  padding:0.55rem 1.4rem;border-radius:100px;font-family:'DM Sans',sans-serif;
+  font-size:0.78rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;
+  cursor:pointer;transition:all 0.2s;
+}
+.nav-cta:hover{background:var(--accent2);transform:scale(1.03)}
+
+/* ─── SHARED ─── */
+.wrap{max-width:1240px;margin:0 auto;padding:0 3rem}
+.pt{padding-top:7rem}
+.sec-eye{font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-bottom:0.8rem}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5.5rem);letter-spacing:0.02em;line-height:0.95;margin-bottom:2.5rem}
+.sec-h .muted{color:var(--mid)}
+.tag{display:inline-block;font-size:0.65rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:0.28rem 0.75rem;border-radius:100px;border:1px solid rgba(0,0,0,0.15);color:var(--mid)}
+.tag.gold{border-color:var(--accent);color:var(--accent2);background:rgba(200,169,110,0.08)}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.25s;text-decoration:none}
+.btn-dark{background:var(--ink);color:var(--white);padding:0.85rem 2rem}
+.btn-dark:hover{background:var(--accent2);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--ink);padding:0.82rem 1.8rem;border:1px solid rgba(0,0,0,0.2)}
+.btn-outline:hover{background:var(--ink);color:var(--white)}
+.btn-gold{background:var(--accent);color:var(--white);padding:0.85rem 2rem}
+.btn-gold:hover{background:var(--accent2);transform:translateY(-2px)}
+.card{background:var(--bg2);border-radius:var(--r2);border:1px solid rgba(0,0,0,0.07);overflow:hidden;transition:transform 0.3s,box-shadow 0.3s}
+.card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.1)}
+
+/* ─── ANIMATIONS ─── */
+.ao{opacity:0;transform:translateY(24px);transition:opacity 0.65s cubic-bezier(0.22,1,0.36,1),transform 0.65s cubic-bezier(0.22,1,0.36,1)}
+.ao.vis{opacity:1;transform:translateY(0)}
+
+/* ════════════════════════════════
+   HOME PAGE
+════════════════════════════════ */
+.hero-home{padding:9rem 3rem 0;max-width:1240px;margin:0 auto}
+.hero-kicker{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;font-size:0.72rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid)}
+.hero-kicker::before{content:'';display:block;width:32px;height:1px;background:var(--accent)}
+.hero-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,13vw,11rem);line-height:0.88;letter-spacing:0.01em;margin-bottom:2rem}
+.hero-headline .em{color:var(--mid);font-family:'DM Serif Display',serif;font-style:italic;font-size:0.75em;display:block;letter-spacing:0}
+.hero-row{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap}
+.hero-copy{max-width:360px;font-size:0.95rem;font-weight:300;line-height:1.7;color:var(--mid)}
+.hero-btns{display:flex;gap:0.75rem;flex-wrap:wrap}
+
+/* Skyline canvas card */
+.sky-card{
+  margin:0 3rem;border-radius:var(--r2);overflow:hidden;height:440px;
+  position:relative;background:#0e1520;
+}
+.sky-canvas{position:absolute;inset:0;width:100%;height:100%}
+.sky-bottom{
+  position:absolute;bottom:0;left:0;right:0;padding:2rem;
+  background:linear-gradient(to top,rgba(5,8,14,0.95) 0%,transparent 100%);
+  display:flex;align-items:flex-end;justify-content:space-between;
+}
+.sky-label{font-size:1.1rem;font-weight:300;color:rgba(255,255,255,0.85);letter-spacing:0.02em}
+.sky-pill{font-size:0.65rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:100px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.6);margin-bottom:0.6rem;display:block}
+.sky-arrow{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;cursor:pointer;transition:all 0.2s}
+.sky-arrow:hover{background:rgba(255,255,255,0.25);transform:rotate(45deg)}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px 3rem 0;max-width:1240px;margin:0 auto}
+.stat-c{background:var(--bg2);border-radius:var(--r);padding:1.5rem 1.8rem;border:1px solid rgba(0,0,0,0.06);transition:all 0.3s;cursor:pointer}
+.stat-c:nth-child(3){background:var(--ink);color:white}
+.stat-c:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.09)}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;letter-spacing:0.02em;line-height:1}
+.stat-l{font-size:0.68rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-top:0.3rem}
+.stat-c:nth-child(3) .stat-l{color:rgba(255,255,255,0.45)}
+.stat-badge-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
+.stat-icon{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;color:white;font-size:0.85rem;transition:transform 0.25s;cursor:pointer}
+.stat-icon:hover{transform:rotate(45deg) scale(1.1)}
+.stat-c:nth-child(3) .stat-icon{background:rgba(255,255,255,0.15)}
+
+/* Marquee */
+.mq-wrap{overflow:hidden;background:var(--ink);padding:1rem 0;margin:2rem 0}
+.mq{display:flex;gap:2.5rem;animation:mq 22s linear infinite;width:max-content}
+.mq-item{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:0.12em;color:rgba(255,255,255,0.35);display:flex;align-items:center;gap:1.5rem}
+.mq-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:0.6}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Trusted */
+.trusted{padding:4rem 3rem;max-width:1240px;margin:0 auto;text-align:center}
+.trusted-logos{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;opacity:0.45}
+.tlogo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.1em;color:var(--mid)}
+
+/* ════════════════════════════════
+   PROJECTS PAGE
+════════════════════════════════ */
+.proj-hero{padding:8rem 3rem 3rem;max-width:1240px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 3rem 4rem;max-width:1240px;margin:0 auto}
+.proj-card{border-radius:var(--r2);overflow:hidden;background:var(--bg2);border:1px solid rgba(0,0,0,0.07);transition:all 0.35s;cursor:pointer}
+.proj-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,0.12)}
+.proj-card.featured{grid-column:span 2;grid-row:span 2}
+.proj-img{height:240px;position:relative;overflow:hidden}
+.proj-card.featured .proj-img{height:100%}
+.proj-img-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;transition:transform 0.5s}
+.proj-card:hover .proj-img-bg{transform:scale(1.05)}
+.proj-body{padding:1.4rem 1.6rem}
+.proj-tag-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.8rem}
+.proj-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.04em;margin-bottom:0.4rem}
+.proj-desc{font-size:0.82rem;color:var(--mid);font-weight:300;line-height:1.6;margin-bottom:1rem}
+.proj-meta{display:flex;gap:1.5rem;font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--light)}
+
+/* Project colors */
+.c1{background:linear-gradient(135deg,#1a2535 0%,#2d3f55 100%)}
+.c2{background:linear-gradient(135deg,#251a15 0%,#3d2a1f 100%)}
+.c3{background:linear-gradient(135deg,#0d1f15 0%,#1a3525 100%)}
+.c4{background:linear-gradient(135deg,#1f1a25 0%,#352a40 100%)}
+.c5{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%)}
+
+/* ════════════════════════════════
+   SERVICES PAGE
+════════════════════════════════ */
+.svc-hero{padding:8rem 3rem 4rem;max-width:1240px;margin:0 auto}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:0 3rem;max-width:1240px;margin:0 auto}
+.svc-card{border-radius:var(--r2);padding:2.5rem;border:1px solid rgba(0,0,0,0.08);background:var(--bg2);transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.svc-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.1)}
+.svc-card.dark-card{background:var(--ink);color:white}
+.svc-icon-big{font-size:3rem;margin-bottom:1.5rem;display:block}
+.svc-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.04em;margin-bottom:0.8rem}
+.svc-desc{font-size:0.875rem;font-weight:300;line-height:1.7;color:var(--mid);margin-bottom:1.5rem}
+.svc-card.dark-card .svc-desc{color:rgba(255,255,255,0.5)}
+.svc-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.svc-list li{font-size:0.8rem;font-weight:400;color:var(--mid);display:flex;align-items:center;gap:0.6rem;letter-spacing:0.04em}
+.svc-list li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.svc-card.dark-card .svc-list li{color:rgba(255,255,255,0.45)}
+.svc-price{margin-top:1.5rem;border-top:1px solid rgba(0,0,0,0.08);padding-top:1.2rem;display:flex;align-items:center;justify-content:space-between}
+.svc-card.dark-card .svc-price{border-color:rgba(255,255,255,0.1)}
+.price-val{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.04em}
+.price-from{font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:var(--mid)}
+.svc-cta-row{padding:3rem;max-width:1240px;margin:0 auto}
+.svc-cta-card{background:var(--ink);border-radius:var(--r2);padding:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.svc-cta-h{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:white;letter-spacing:0.04em}
+.svc-cta-p{font-size:0.9rem;font-weight:300;color:rgba(255,255,255,0.5);margin-top:0.5rem;max-width:400px}
+
+/* ════════════════════════════════
+   ABOUT PAGE
+════════════════════════════════ */
+.about-split{display:grid;grid-template-columns:1fr 1fr;gap:5rem;padding:8rem 3rem 5rem;max-width:1240px;margin:0 auto;align-items:center}
+.about-visual{border-radius:var(--r2);height:480px;background:var(--ink);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.about-big-num{font-family:'Bebas Neue',sans-serif;font-size:12rem;color:rgba(255,255,255,0.04);line-height:1;user-select:none}
+.about-badge{position:absolute;bottom:2rem;left:2rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--r);padding:1rem 1.5rem}
+.about-badge-n{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:white;letter-spacing:0.04em;line-height:1}
+.about-badge-l{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.4);margin-top:0.3rem}
+.about-body{}
+.about-body p{font-size:0.95rem;font-weight:300;line-height:1.8;color:var(--mid);margin-bottom:1.2rem}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 3rem 5rem;max-width:1240px;margin:0 auto}
+.team-card{border-radius:var(--r);overflow:hidden;background:var(--bg2);border:1px solid rgba(0,0,0,0.07);transition:all 0.3s}
+.team-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.09)}
+.team-avatar{height:180px;display:flex;align-items:center;justify-content:center;font-size:3.5rem}
+.team-info{padding:1rem 1.2rem}
+.team-name{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.06em}
+.team-role{font-size:0.72rem;color:var(--mid);font-weight:400;letter-spacing:0.08em;text-transform:uppercase;margin-top:0.2rem}
+.values-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 3rem 5rem;max-width:1240px;margin:0 auto}
+.val-card{padding:2rem;border-radius:var(--r);background:var(--bg2);border:1px solid rgba(0,0,0,0.07)}
+.val-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--bg3);letter-spacing:0.04em;line-height:1;margin-bottom:0.8rem}
+.val-title{font-weight:500;font-size:0.95rem;margin-bottom:0.5rem}
+.val-desc{font-size:0.82rem;color:var(--mid);font-weight:300;line-height:1.65}
+
+/* ════════════════════════════════
+   PORTFOLIO PAGE
+════════════════════════════════ */
+.port-hero{padding:8rem 3rem 3rem;max-width:1240px;margin:0 auto}
+.port-filter{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:3rem}
+.filt-btn{background:transparent;border:1px solid rgba(0,0,0,0.12);border-radius:100px;padding:0.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:400;color:var(--mid);cursor:pointer;transition:all 0.2s;letter-spacing:0.06em}
+.filt-btn:hover,.filt-btn.active{background:var(--ink);color:white;border-color:var(--ink)}
+.port-masonry{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 3rem 5rem;max-width:1240px;margin:0 auto}
+.port-item{border-radius:var(--r);overflow:hidden;position:relative;cursor:pointer;transition:all 0.35s}
+.port-item:hover{transform:scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,0.15)}
+.port-item:nth-child(2){grid-row:span 2}
+.port-item:nth-child(5){grid-column:span 2}
+.port-thumb{height:240px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative}
+.port-item:nth-child(2) .port-thumb{height:496px}
+.port-item:nth-child(5) .port-thumb{height:220px}
+.port-overlay{position:absolute;inset:0;background:rgba(10,12,18,0.75);opacity:0;display:flex;align-items:center;justify-content:center;transition:opacity 0.3s}
+.port-item:hover .port-overlay{opacity:1}
+.port-overlay-text{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:white;letter-spacing:0.08em;text-align:center}
+.port-caption{padding:1rem 1.2rem;background:var(--bg2)}
+.port-caption-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.06em;margin-bottom:0.2rem}
+.port-caption-sub{font-size:0.72rem;color:var(--mid);text-transform:uppercase;letter-spacing:0.1em}
+.port-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 3rem 5rem;max-width:1240px;margin:0 auto}
+.pstat{padding:1.8rem;background:var(--bg2);border-radius:var(--r);border:1px solid rgba(0,0,0,0.07);text-align:center}
+.pstat-n{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:0.04em;line-height:1;color:var(--ink)}
+.pstat-l{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--mid);margin-top:0.4rem}
+
+/* ════════════════════════════════
+   LOGIN PAGE
+════════════════════════════════ */
+.login-wrap{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.login-left{background:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:3rem;position:relative;overflow:hidden}
+.login-left-top{z-index:2;position:relative}
+.login-logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:white;letter-spacing:0.08em}
+.login-logo span{color:var(--accent)}
+.login-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,7vw,6rem);color:white;line-height:0.92;letter-spacing:0.02em;z-index:2;position:relative}
+.login-big .dim{color:rgba(255,255,255,0.3)}
+.login-tagline{font-size:0.85rem;font-weight:300;color:rgba(255,255,255,0.4);margin-top:1rem;z-index:2;position:relative}
+.login-bg-num{position:absolute;bottom:-2rem;right:-1rem;font-family:'Bebas Neue',sans-serif;font-size:18rem;color:rgba(255,255,255,0.03);line-height:1;pointer-events:none;z-index:1}
+.login-right{background:var(--bg);display:flex;align-items:center;justify-content:center;padding:3rem}
+.login-box{width:100%;max-width:420px}
+.login-tabs{display:flex;background:var(--bg2);border-radius:100px;padding:4px;margin-bottom:2.5rem}
+.ltab{flex:1;text-align:center;padding:0.6rem;border-radius:100px;font-size:0.8rem;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;color:var(--mid)}
+.ltab.active{background:var(--ink);color:white}
+.login-h{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.04em;margin-bottom:0.5rem}
+.login-sub{font-size:0.85rem;color:var(--mid);font-weight:300;margin-bottom:2rem}
+.form-group{margin-bottom:1.2rem}
+.form-label{font-size:0.72rem;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:var(--mid);display:block;margin-bottom:0.5rem}
+.form-input{width:100%;padding:0.85rem 1.1rem;background:var(--white);border:1px solid rgba(0,0,0,0.1);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:300;color:var(--ink);outline:none;transition:border-color 0.2s}
+.form-input:focus{border-color:var(--ink)}
+.form-input::placeholder{color:var(--light)}
+.form-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;font-size:0.8rem}
+.form-check{display:flex;align-items:center;gap:0.5rem;color:var(--mid);cursor:pointer}
+.form-check input{accent-color:var(--ink)}
+.form-forgot{color:var(--mid);text-decoration:none;font-size:0.8rem;transition:color 0.2s}
+.form-forgot:hover{color:var(--ink)}
+.btn-login{width:100%;background:var(--ink);color:white;border:none;padding:1rem;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:500;cursor:pointer;letter-spacing:0.04em;transition:all 0.25s;margin-bottom:1rem}
+.btn-login:hover{background:var(--accent2);transform:translateY(-2px)}
+.login-or{display:flex;align-items:center;gap:1rem;margin:1rem 0;font-size:0.75rem;color:var(--light)}
+.login-or::before,.login-or::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.1)}
+.social-btns{display:flex;gap:0.75rem}
+.social-btn{flex:1;background:var(--bg2);border:1px solid rgba(0,0,0,0.08);border-radius:var(--r);padding:0.75rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:400;color:var(--mid);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.social-btn:hover{background:var(--bg3);color:var(--ink)}
+.login-footer{margin-top:1.5rem;text-align:center;font-size:0.8rem;color:var(--mid)}
+.login-footer a{color:var(--ink);text-decoration:none;font-weight:500}
+.login-success{display:none;text-align:center;padding:2rem 0}
+.success-icon{font-size:3rem;margin-bottom:1rem}
+.success-h{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.04em;margin-bottom:0.5rem}
+.success-p{font-size:0.875rem;color:var(--mid);font-weight:300}
+
+/* ─── FOOTER ─── */
+.site-footer{background:var(--ink);color:white;padding:4rem 3rem 2.5rem;margin-top:4rem}
+.footer-grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.08em;margin-bottom:1rem}
+.footer-brand span{color:var(--accent)}
+.footer-tagline{font-size:0.85rem;font-weight:300;color:rgba(255,255,255,0.4);line-height:1.65;max-width:260px}
+.footer-col-h{font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.18em;color:rgba(255,255,255,0.35);margin-bottom:1.2rem}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:0.7rem}
+.footer-links a{font-size:0.875rem;font-weight:300;color:rgba(255,255,255,0.55);text-decoration:none;cursor:pointer;transition:color 0.2s}
+.footer-links a:hover{color:white}
+.footer-bottom{max-width:1240px;margin:2rem auto 0;display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;color:rgba(255,255,255,0.3)}
+
+/* ─── MODAL ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--bg);border-radius:var(--r2);padding:2.5rem;max-width:480px;width:90%;position:relative;animation:pageIn 0.35s cubic-bezier(0.22,1,0.36,1)}
+.modal-close{position:absolute;top:1.2rem;right:1.2rem;background:var(--bg2);border:none;width:32px;height:32px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--mid);transition:all 0.2s}
+.modal-close:hover{background:var(--ink);color:white}
+.modal-h{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.04em;margin-bottom:0.5rem}
+.modal-p{font-size:0.875rem;color:var(--mid);font-weight:300;line-height:1.65;margin-bottom:1.5rem}
+
+/* ─── TOAST ─── */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:white;padding:0.9rem 1.5rem;border-radius:var(--r);font-size:0.85rem;font-weight:400;z-index:9999;opacity:0;transform:translateY(20px);transition:all 0.3s;pointer-events:none;display:flex;align-items:center;gap:0.6rem}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast::before{content:'✓';width:20px;height:20px;border-radius:50%;background:rgba(200,169,110,0.3);display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:var(--accent);flex-shrink:0}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .wrap,.hero-home,.sky-card,.stats-row,.proj-hero,.proj-grid,.svc-hero,.svc-grid,.svc-cta-row,.about-split,.team-grid,.values-row,.port-hero,.port-masonry,.port-stats-row,.trusted{padding-left:1.5rem;padding-right:1.5rem}
+  .proj-grid,.svc-grid,.team-grid,.values-row,.port-masonry,.port-stats-row{grid-template-columns:1fr 1fr}
+  .proj-card.featured{grid-column:span 1;grid-row:span 1}
+  .proj-card.featured .proj-img{height:240px}
+  .port-item:nth-child(2){grid-row:span 1}.port-item:nth-child(2) .port-thumb{height:240px}
+  .port-item:nth-child(5){grid-column:span 1}
+  .about-split{grid-template-columns:1fr}
+  .login-wrap{grid-template-columns:1fr}
+  .login-left{display:none}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .stats-row{padding-left:1.5rem;padding-right:1.5rem}
+}
+@media(max-width:600px){
+  .proj-grid,.svc-grid,.team-grid,.values-row,.port-masonry,.port-stats-row{grid-template-columns:1fr}
+  .port-stats-row{grid-template-columns:1fr 1fr}
+  .hero-headline{font-size:clamp(4rem,18vw,7rem)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="logo" onclick="goTo('home')">APART<span>◆</span>MENT</div>
+  <ul class="nav-links" id="nav-links">
+    <li><a onclick="goTo('home')" data-page="home">Home</a></li>
+    <li><a onclick="goTo('projects')" data-page="projects">Projects</a></li>
+    <li><a onclick="goTo('services')" data-page="services">Services</a></li>
+    <li><a onclick="goTo('about')" data-page="about">About</a></li>
+    <li><a onclick="goTo('portfolio')" data-page="portfolio">Portfolio</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-login" onclick="goTo('login')">Login</button>
+    <button class="nav-cta" onclick="openModal('contact')">Get a Quote</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════
+     HOME PAGE
+══════════════════════════════ -->
+<div class="page active" id="page-home">
+  <section class="hero-home">
+    <div class="hero-kicker">Elite Construction &amp; Development Since 2009</div>
+    <h1 class="hero-headline">
+      YOUR FUTURE,<br>
+      <span class="em">Our Mission</span>
+    </h1>
+    <div class="hero-row">
+      <p class="hero-copy">We exceed standards in elite construction and urban development — delivering iconic spaces that define skylines and elevate communities.</p>
+      <div class="hero-btns">
+        <button class="btn btn-dark" onclick="goTo('projects')">Explore Projects ↗</button>
+        <button class="btn btn-outline" onclick="goTo('about')">Our Story</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skyline card -->
+  <div style="max-width:1240px;margin:0 auto;padding:0 3rem">
+    <div class="sky-card">
+      <canvas class="sky-canvas" id="sky-canvas"></canvas>
+      <div class="sky-bottom">
+        <div>
+          <span class="sky-pill">● 3 Active Sites</span>
+          <div class="sky-label">Leader in elite construction</div>
+        </div>
+        <div class="sky-arrow" onclick="goTo('projects')">↗</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row" style="padding-top:10px">
+    <div class="stat-c ao">
+      <div class="stat-badge-row">
+        <div class="stat-n" id="s1">0</div>
+        <div class="stat-icon" onclick="goTo('projects')">↗</div>
+      </div>
+      <div class="stat-l">Total Units</div>
+    </div>
+    <div class="stat-c ao" style="transition-delay:0.1s">
+      <div class="stat-badge-row">
+        <div class="stat-n" id="s2">0K</div>
+        <span class="tag">Reliable</span>
+      </div>
+      <div class="stat-l">Sq. Ft. Developed</div>
+    </div>
+    <div class="stat-c ao" style="transition-delay:0.2s">
+      <div class="stat-badge-row">
+        <div class="stat-n" id="s3">$0M</div>
+        <span class="tag gold">Top Tier</span>
+      </div>
+      <div class="stat-l">Portfolio Value (5)</div>
+    </div>
+  </div>
+
+  <!-- Marquee -->
+  <div class="mq-wrap" style="margin-top:2rem">
+    <div class="mq">
+      <span class="mq-item">Elite Construction<span class="mq-dot"></span></span>
+      <span class="mq-item">Urban Development<span class="mq-dot"></span></span>
+      <span class="mq-item">Luxury Residences<span class="mq-dot"></span></span>
+      <span class="mq-item">$256M Portfolio<span class="mq-dot"></span></span>
+      <span class="mq-item">34 Total Units<span class="mq-dot"></span></span>
+      <span class="mq-item">Award Winning Design<span class="mq-dot"></span></span>
+      <span class="mq-item">Elite Construction<span class="mq-dot"></span></span>
+      <span class="mq-item">Urban Development<span class="mq-dot"></span></span>
+      <span class="mq-item">Luxury Residences<span class="mq-dot"></span></span>
+      <span class="mq-item">$256M Portfolio<span class="mq-dot"></span></span>
+      <span class="mq-item">34 Total Units<span class="mq-dot"></span></span>
+      <span class="mq-item">Award Winning Design<span class="mq-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- Trusted -->
+  <div class="trusted ao">
+    <p class="sec-eye">Trusted By</p>
+    <div class="trusted-logos">
+      <div class="tlogo">VANTARA</div>
+      <div class="tlogo">NEXBUILD</div>
+      <div class="tlogo">ARCORION</div>
+      <div class="tlogo">STONEWALL</div>
+      <div class="tlogo">PRIMEX</div>
+      <div class="tlogo">CELSTRUCT</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">APART<span>◆</span>MENT</div>
+        <p class="footer-tagline">Exceeding standards in elite construction and urban development since 2009.</p>
+      </div>
+      <div>
+        <div class="footer-col-h">Company</div>
+        <ul class="footer-links">
+          <li><a onclick="goTo('about')">About Us</a></li>
+          <li><a onclick="goTo('projects')">Projects</a></li>
+          <li><a onclick="goTo('services')">Services</a></li>
+          <li><a onclick="goTo('portfolio')">Portfolio</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-h">Services</div>
+        <ul class="footer-links">
+          <li><a onclick="goTo('services')">Residential</a></li>
+          <li><a onclick="goTo('services')">Commercial</a></li>
+          <li><a onclick="goTo('services')">Renovation</a></li>
+          <li><a onclick="goTo('services')">Consulting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-h">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@apartment.com">hello@apartment.com</a></li>
+          <li><a href="tel:+1234567890">+1 234 567 890</a></li>
+          <li><a>123 Build St, NYC</a></li>
+          <li><a onclick="goTo('login')">Client Portal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 APARTment Group. All rights reserved.</span>
+      <span>Your Future, Our Mission.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PROJECTS PAGE
+══════════════════════════════ -->
+<div class="page" id="page-projects">
+  <div class="proj-hero">
+    <div>
+      <p class="sec-eye">Our Work</p>
+      <h2 class="sec-h">LANDMARK<br><span class="muted">PROJECTS</span></h2>
+    </div>
+    <div style="max-width:340px">
+      <p style="font-size:0.9rem;color:var(--mid);font-weight:300;line-height:1.7;margin-bottom:1.2rem">From residential towers to mixed-use developments — each project is built with precision and vision.</p>
+      <button class="btn btn-dark" onclick="openModal('contact')">Start a Project ↗</button>
+    </div>
+  </div>
+
+  <div class="proj-grid">
+    <div class="proj-card featured ao">
+      <div class="proj-img"><div class="proj-img-bg c1" style="font-size:6rem">🏙️</div></div>
+      <div class="proj-body">
+        <div class="proj-tag-row"><span class="tag gold">Featured</span><span class="tag">2024</span></div>
+        <div class="proj-title">The Meridian Tower</div>
+        <p class="proj-desc">48-storey luxury residential tower in downtown Manhattan. 312 premium units, sky lobbies, and panoramic terraces.</p>
+        <div class="proj-meta"><span>312 Units</span><span>Manhattan, NY</span><span>$145M</span></div>
+      </div>
+    </div>
+    <div class="proj-card ao" style="transition-delay:0.1s">
+      <div class="proj-img"><div class="proj-img-bg c2">🏛️</div></div>
+      <div class="proj-body">
+        <div class="proj-tag-row"><span class="tag">Commercial</span><span class="tag">2023</span></div>
+        <div class="proj-title">The Arcadia Complex</div>
+        <p class="proj-desc">Mixed-use commercial and retail complex spanning 5 city blocks.</p>
+        <div class="proj-meta"><span>82K Sq.Ft</span><span>Chicago, IL</span></div>
+      </div>
+    </div>
+    <div class="proj-card ao" style="transition-delay:0.2s">
+      <div class="proj-img"><div class="proj-img-bg c3">🌿</div></div>
+      <div class="proj-body">
+        <div class="proj-tag-row"><span class="tag">Residential</span><span class="tag">2023</span></div>
+        <div class="proj-title">Verdant Gardens</div>
+        <p class="proj-desc">Eco-luxury low-rise residential complex with biophilic design.</p>
+        <div class="proj-meta"><span>64 Units</span><span>Austin, TX</span></div>
+      </div>
+    </div>
+    <div class="proj-card ao" style="transition-delay:0.15s">
+      <div class="proj-img"><div class="proj-img-bg c4">🌆</div></div>
+      <div class="proj-body">
+        <div class="proj-tag-row"><span class="tag">Mixed Use</span><span class="tag">2022</span></div>
+        <div class="proj-title">Obsidian Quarter</div>
+        <p class="proj-desc">Award-winning mixed-use development with offices, retail, and residences.</p>
+        <div class="proj-meta"><span>220 Units</span><span>Seattle, WA</span></div>
+      </div>
+    </div>
+    <div class="proj-card ao" style="transition-delay:0.25s">
+      <div class="proj-img"><div class="proj-img-bg c5">🏗️</div></div>
+      <div class="proj-body">
+        <div class="proj-tag-row"><span class="tag">Under Construction</span></div>
+        <div class="proj-title">Nova District</div>
+        <p class="proj-desc">Next-generation smart city development with integrated AI infrastructure.</p>
+        <div class="proj-meta"><span>Phase 1 of 3</span><span>Miami, FL</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-grid">
+      <div><div class="footer-brand">APART<span>◆</span>MENT</div><p class="footer-tagline">Exceeding standards in elite construction since 2009.</p></div>
+      <div><div class="footer-col-h">Navigate</div><ul class="footer-links"><li><a onclick="goTo('home')">Home</a></li><li><a onclick="goTo('services')">Services</a></li><li><a onclick="goTo('about')">About</a></li></ul></div>
+      <div><div class="footer-col-h">Legal</div><ul class="footer-links"><li><a>Privacy Policy</a></li><li><a>Terms of Service</a></li></ul></div>
+      <div><div class="footer-col-h">Connect</div><ul class="footer-links"><li><a>Instagram</a></li><li><a>LinkedIn</a></li><li><a>Twitter</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 APARTment Group.</span><span>Your Future, Our Mission.</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SERVICES PAGE
+══════════════════════════════ -->
+<div class="page" id="page-services">
+  <div class="svc-hero">
+    <p class="sec-eye">What We Do</p>
+    <h2 class="sec-h">FULL-SPECTRUM<br><span class="muted">SERVICES</span></h2>
+  </div>
+
+  <div class="svc-grid">
+    <div class="svc-card ao">
+      <span class="svc-icon-big">🏗️</span>
+      <div class="svc-title">Residential Construction</div>
+      <p class="svc-desc">End-to-end construction of luxury apartment complexes, condominiums, and high-rise residential buildings.</p>
+      <ul class="svc-list">
+        <li>Architectural design & planning</li>
+        <li>Structural engineering</li>
+        <li>Premium material sourcing</li>
+        <li>Interior finishing</li>
+        <li>Quality assurance & sign-off</li>
+      </ul>
+      <div class="svc-price">
+        <div><div class="price-from">Starting from</div><div class="price-val">$2.5M</div></div>
+        <button class="btn btn-dark" onclick="openModal('contact')">Get Quote ↗</button>
+      </div>
+    </div>
+
+    <div class="svc-card dark-card ao" style="transition-delay:0.1s">
+      <span class="svc-icon-big">🏢</span>
+      <div class="svc-title">Commercial Development</div>
+      <p class="svc-desc">Large-scale commercial buildings, office towers, and mixed-use developments tailored for modern enterprises.</p>
+      <ul class="svc-list">
+        <li>Site acquisition consulting</li>
+        <li>Zoning & permits management</li>
+        <li>Smart building integration</li>
+        <li>Sustainability certification</li>
+        <li>Tenant fit-out services</li>
+      </ul>
+      <div class="svc-price">
+        <div><div class="price-from" style="color:rgba(255,255,255,0.35)">Starting from</div><div class="price-val" style="color:white">$8M</div></div>
+        <button class="btn btn-gold" onclick="openModal('contact')">Get Quote ↗</button>
+      </div>
+    </div>
+
+    <div class="svc-card ao" style="transition-delay:0.15s">
+      <span class="svc-icon-big">🔧</span>
+      <div class="svc-title">Renovation & Retrofit</div>
+      <p class="svc-desc">Breathe new life into existing structures with comprehensive renovation and modernization services.</p>
+      <ul class="svc-list">
+        <li>Structural assessment & repair</li>
+        <li>Energy efficiency upgrades</li>
+        <li>Facade restoration</li>
+        <li>Interior redesign</li>
+      </ul>
+      <div class="svc-price">
+        <div><div class="price-from">Starting from</div><div class="price-val">$500K</div></div>
+        <button class="btn btn-dark" onclick="openModal('contact')">Get Quote ↗</button>
+      </div>
+    </div>
+
+    <div class="svc-card ao" style="transition-delay:0.2s">
+      <span class="svc-icon-big">📐</span>
+      <div class="svc-title">Design & Consulting</div>
+      <p class="svc-desc">Expert architectural consulting, feasibility studies, and design services for developers and investors.</p>
+      <ul class="svc-list">
+        <li>Feasibility analysis</li>
+        <li>Master planning</li>
+        <li>ROI modelling</li>
+        <li>Permit & compliance advisory</li>
+      </ul>
+      <div class="svc-price">
+        <div><div class="price-from">Starting from</div><div class="price-val">$50K</div></div>
+        <button class="btn btn-dark" onclick="openModal('contact')">Get Quote ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="svc-cta-row ao">
+    <div class="svc-cta-card">
+      <div>
+        <div class="svc-cta-h">READY TO BUILD<br>SOMETHING ICONIC?</div>
+        <p class="svc-cta-p">Let's talk about your vision. Our team is ready to turn your concept into a landmark.</p>
+      </div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="openModal('contact')">Book a Consultation ↗</button>
+        <button class="btn" style="background:rgba(255,255,255,0.08);color:white;border:1px solid rgba(255,255,255,0.15);padding:0.85rem 2rem" onclick="goTo('portfolio')">See Portfolio</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-grid">
+      <div><div class="footer-brand">APART<span>◆</span>MENT</div><p class="footer-tagline">Exceeding standards in elite construction since 2009.</p></div>
+      <div><div class="footer-col-h">Navigate</div><ul class="footer-links"><li><a onclick="goTo('home')">Home</a></li><li><a onclick="goTo('projects')">Projects</a></li><li><a onclick="goTo('about')">About</a></li></ul></div>
+      <div><div class="footer-col-h">Services</div><ul class="footer-links"><li><a>Residential</a></li><li><a>Commercial</a></li><li><a>Renovation</a></li></ul></div>
+      <div><div class="footer-col-h">Contact</div><ul class="footer-links"><li><a>hello@apartment.com</a></li><li><a>+1 234 567 890</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 APARTment Group.</span><span>Your Future, Our Mission.</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     ABOUT PAGE
+══════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="about-split">
+    <div class="about-visual">
+      <div class="about-big-num">16</div>
+      <div class="about-badge">
+        <div class="about-badge-n">2009</div>
+        <div class="about-badge-l">Founded</div>
+      </div>
+    </div>
+    <div class="about-body">
+      <p class="sec-eye">Our Story</p>
+      <h2 class="sec-h">BUILT ON<br><span class="muted">INTEGRITY</span></h2>
+      <p>APARTment Group was founded in 2009 with a single conviction: that great architecture shapes great lives. What began as a boutique design-build firm has grown into one of the most respected names in elite urban construction.</p>
+      <p>Over 16 years we've delivered 34 landmark projects across 12 cities — from luxury residential towers to transformative mixed-use developments. Our portfolio of $256M reflects not just scale, but an uncompromising commitment to craft.</p>
+      <p>We believe buildings are more than structures — they're statements about what a community values, and promises to the people who will inhabit them for generations.</p>
+      <div style="display:flex;gap:0.75rem;margin-top:1.5rem">
+        <button class="btn btn-dark" onclick="goTo('projects')">Our Projects ↗</button>
+        <button class="btn btn-outline" onclick="openModal('contact')">Work With Us</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:0 3rem 1rem;max-width:1240px;margin:0 auto">
+    <p class="sec-eye">The Team</p>
+    <h3 class="sec-h" style="font-size:clamp(2rem,4vw,3.5rem)">LEADERSHIP</h3>
+  </div>
+  <div class="team-grid">
+    <div class="team-card ao">
+      <div class="team-avatar" style="background:#1a2535">👤</div>
+      <div class="team-info">
+        <div class="team-name">Marcus Reid</div>
+        <div class="team-role">Founder & CEO</div>
+      </div>
+    </div>
+    <div class="team-card ao" style="transition-delay:0.1s">
+      <div class="team-avatar" style="background:#251a15">👤</div>
+      <div class="team-info">
+        <div class="team-name">Priya Menon</div>
+        <div class="team-role">Chief Architect</div>
+      </div>
+    </div>
+    <div class="team-card ao" style="transition-delay:0.2s">
+      <div class="team-avatar" style="background:#0d1f15">👤</div>
+      <div class="team-info">
+        <div class="team-name">Daniel Cross</div>
+        <div class="team-role">Head of Engineering</div>
+      </div>
+    </div>
+    <div class="team-card ao" style="transition-delay:0.3s">
+      <div class="team-avatar" style="background:#1f1a25">👤</div>
+      <div class="team-info">
+        <div class="team-name">Sara Kimura</div>
+        <div class="team-role">Director of Operations</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:0 3rem 1rem;max-width:1240px;margin:0 auto">
+    <p class="sec-eye">Our Values</p>
+    <h3 class="sec-h" style="font-size:clamp(2rem,4vw,3.5rem)">WHAT DRIVES US</h3>
+  </div>
+  <div class="values-row">
+    <div class="val-card ao"><div class="val-num">01</div><div class="val-title">Precision First</div><p class="val-desc">Every joint, every pour, every finish is held to an uncompromising standard. Precision isn't a goal — it's a baseline.</p></div>
+    <div class="val-card ao" style="transition-delay:0.1s"><div class="val-num">02</div><div class="val-title">Client Transparency</div><p class="val-desc">Open communication at every phase. You'll always know where your project stands, and why every decision is made.</p></div>
+    <div class="val-card ao" style="transition-delay:0.2s"><div class="val-num">03</div><div class="val-title">Sustainable Impact</div><p class="val-desc">We build with tomorrow in mind — integrating sustainable materials and energy-efficient systems across all our projects.</p></div>
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-grid">
+      <div><div class="footer-brand">APART<span>◆</span>MENT</div><p class="footer-tagline">Exceeding standards in elite construction since 2009.</p></div>
+      <div><div class="footer-col-h">Navigate</div><ul class="footer-links"><li><a onclick="goTo('home')">Home</a></li><li><a onclick="goTo('projects')">Projects</a></li><li><a onclick="goTo('services')">Services</a></li></ul></div>
+      <div><div class="footer-col-h">Company</div><ul class="footer-links"><li><a>Careers</a></li><li><a>Press</a></li><li><a>Investors</a></li></ul></div>
+      <div><div class="footer-col-h">Contact</div><ul class="footer-links"><li><a>hello@apartment.com</a></li><li><a onclick="goTo('login')">Client Portal</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 APARTment Group.</span><span>Your Future, Our Mission.</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PORTFOLIO PAGE
+══════════════════════════════ -->
+<div class="page" id="page-portfolio">
+  <div class="port-hero">
+    <p class="sec-eye">Selected Works</p>
+    <h2 class="sec-h">OUR<br><span class="muted">PORTFOLIO</span></h2>
+    <div class="port-filter" id="port-filter">
+      <button class="filt-btn active" onclick="filterPort(this,'all')">All</button>
+      <button class="filt-btn" onclick="filterPort(this,'residential')">Residential</button>
+      <button class="filt-btn" onclick="filterPort(this,'commercial')">Commercial</button>
+      <button class="filt-btn" onclick="filterPort(this,'mixed')">Mixed Use</button>
+      <button class="filt-btn" onclick="filterPort(this,'renovation')">Renovation</button>
+    </div>
+  </div>
+
+  <div class="port-masonry">
+    <div class="port-item" data-cat="residential">
+      <div class="port-thumb c1">🏙️</div>
+      <div class="port-overlay"><div class="port-overlay-text">View Project<br>→</div></div>
+      <div class="port-caption"><div class="port-caption-title">Meridian Tower</div><div class="port-caption-sub">Residential · Manhattan</div></div>
+    </div>
+    <div class="port-item" data-cat="commercial">
+      <div class="port-thumb c2">🏢</div>
+      <div class="port-overlay"><div class="port-overlay-text">View Project<br>→</div></div>
+      <div class="port-caption"><div class="port-caption-title">Arcadia Complex</div><div class="port-caption-sub">Commercial · Chicago</div></div>
+    </div>
+    <div class="port-item" data-cat="residential">
+      <div class="port-thumb c3">🌿</div>
+      <div class="port-overlay"><div class="port-overlay-text">View Project<br>→</div></div>
+      <div class="port-caption"><div class="port-caption-title">Verdant Gardens</div><div class="port-caption-sub">Residential · Austin</div></div>
+    </div>
+    <div class="port-item" data-cat="mixed">
+      <div class="port-thumb c4">🌆</div>
+      <div class="port-overlay"><div class="port-overlay-text">View Project<br>→</div></div>
+      <div class="port-caption"><div class="port-caption-title">Obsidian Quarter</div><div class="port-caption-sub">Mixed Use · Seattle</div></div>
+    </div>
+    <div class="port-item" data-cat="renovation">
+      <div class="port-thumb c5">🔧</div>
+      <div class="port-overlay"><div class="port-overlay-text">View Project<br>→</div></div>
+      <div class="port-caption"><div class="port-caption-title">Heritage Lofts</div><div class="port-caption-sub">Renovation · Boston</div></div>
+    </div>
+    <div class="port-item" data-cat="mixed">
+      <div class="port-thumb" style="background:linear-gradient(135deg,#1a1a2e,#2d2d45)">🏗️</div>
+      <div class="port-overlay"><div class="port-overlay-text">View Project<br>→</div></div>
+      <div class="port-caption"><div class="port-caption-title">Nova District</div><div class="port-caption-sub">Mixed Use · Miami</div></div>
+    </div>
+  </div>
+
+  <div class="port-stats-row">
+    <div class="pstat ao"><div class="pstat-n">34</div><div class="pstat-l">Projects Delivered</div></div>
+    <div class="pstat ao" style="transition-delay:0.1s"><div class="pstat-n">12</div><div class="pstat-l">Cities</div></div>
+    <div class="pstat ao" style="transition-delay:0.2s"><div class="pstat-n">$256M</div><div class="pstat-l">Portfolio Value</div></div>
+    <div class="pstat ao" style="transition-delay:0.3s"><div class="pstat-n">16yr</div><div class="pstat-l">In Business</div></div>
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-grid">
+      <div><div class="footer-brand">APART<span>◆</span>MENT</div><p class="footer-tagline">Exceeding standards in elite construction since 2009.</p></div>
+      <div><div class="footer-col-h">Navigate</div><ul class="footer-links"><li><a onclick="goTo('home')">Home</a></li><li><a onclick="goTo('projects')">Projects</a></li><li><a onclick="goTo('services')">Services</a></li></ul></div>
+      <div><div class="footer-col-h">Works</div><ul class="footer-links"><li><a>Residential</a></li><li><a>Commercial</a></li><li><a>Mixed Use</a></li><li><a>Renovation</a></li></ul></div>
+      <div><div class="footer-col-h">Contact</div><ul class="footer-links"><li><a>hello@apartment.com</a></li><li><a onclick="goTo('login')">Client Portal</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 APARTment Group.</span><span>Your Future, Our Mission.</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     LOGIN PAGE
+══════════════════════════════ -->
+<div class="page" id="page-login">
+  <div class="login-wrap">
+    <!-- Left panel -->
+    <div class="login-left">
+      <div class="login-left-top">
+        <div class="login-logo">APART<span>◆</span>MENT</div>
+      </div>
+      <div>
+        <div class="login-big">YOUR<br>FUTURE,<br><span class="dim">OUR<br>MISSION.</span></div>
+        <p class="login-tagline">Access your client dashboard, track project progress, and manage your portfolio.</p>
+      </div>
+      <div class="login-bg-num">256</div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="login-right">
+      <div class="login-box">
+        <div class="login-tabs">
+          <div class="ltab active" onclick="switchTab('login')">Sign In</div>
+          <div class="ltab" onclick="switchTab('register')">Register</div>
+        </div>
+
+        <!-- Login form -->
+        <div id="login-form">
+          <div class="login-h">Welcome back</div>
+          <p class="login-sub">Sign in to your client portal</p>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="you@example.com" id="l-email">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" placeholder="••••••••" id="l-pass">
+          </div>
+          <div class="form-row">
+            <label class="form-check"><input type="checkbox"> Remember me</label>
+            <a href="#" class="form-forgot">Forgot password?</a>
+          </div>
+          <button class="btn-login" onclick="doLogin()">Sign In →</button>
+          <div class="login-or">or continue with</div>
+          <div class="social-btns">
+            <button class="social-btn" onclick="showToast('Google login coming soon')">🔵 Google</button>
+            <button class="social-btn" onclick="showToast('Apple login coming soon')">⚫ Apple</button>
+          </div>
+          <p class="login-footer">Don't have an account? <a onclick="switchTab('register')">Register here</a></p>
+        </div>
+
+        <!-- Register form -->
+        <div id="register-form" style="display:none">
+          <div class="login-h">Create account</div>
+          <p class="login-sub">Join the APARTment client portal</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem">
+            <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="John" id="r-first"></div>
+            <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Doe" id="r-last"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="you@example.com" id="r-email"></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" class="form-input" placeholder="Create password" id="r-pass"></div>
+          <div class="form-group"><label class="form-label">Company (optional)</label><input type="text" class="form-input" placeholder="Your company name" id="r-company"></div>
+          <button class="btn-login" onclick="doRegister()">Create Account →</button>
+          <p class="login-footer">Already have an account? <a onclick="switchTab('login')">Sign in</a></p>
+        </div>
+
+        <!-- Success state -->
+        <div class="login-success" id="login-success">
+          <div class="success-icon">✅</div>
+          <div class="success-h">You're In!</div>
+          <p class="success-p">Welcome back. Redirecting to your dashboard...</p>
+          <button class="btn btn-dark" style="margin:1.5rem auto 0;display:inline-flex" onclick="goTo('home')">← Back to Home</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CONTACT MODAL
+══════════════════════════════ -->
+<div class="modal-overlay" id="modal-contact" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModalById('contact')">✕</button>
+    <div class="modal-h">GET A QUOTE</div>
+    <p class="modal-p">Tell us about your project and our team will reach out within 24 hours with a detailed consultation plan.</p>
+    <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" placeholder="Your name" id="m-name"></div>
+    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="you@example.com" id="m-email"></div>
+    <div class="form-group"><label class="form-label">Project Type</label>
+      <select class="form-input" id="m-type" style="cursor:pointer">
+        <option value="">Select type</option>
+        <option>Residential Construction</option>
+        <option>Commercial Development</option>
+        <option>Renovation & Retrofit</option>
+        <option>Design & Consulting</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" rows="3" placeholder="Describe your project..." id="m-msg" style="resize:vertical"></textarea></div>
+    <button class="btn btn-dark" style="width:100%;justify-content:center" onclick="submitContact()">Send Message ↗</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── ROUTING ──
+function goTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  // Trigger scroll animations
+  setTimeout(triggerVisible, 100);
+  // Draw canvas if home
+  if (page === 'home') setTimeout(drawSkyline, 200);
+  // Counter if home
+  if (page === 'home') setTimeout(runCounters, 400);
+}
+
+// ── SCROLL ANIMATIONS ──
+function triggerVisible() {
+  document.querySelectorAll('.ao').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 60) el.classList.add('vis');
+  });
+}
+window.addEventListener('scroll', triggerVisible);
+setTimeout(triggerVisible, 300);
+
+// ── SKYLINE CANVAS ──
+function drawSkyline() {
+  const canvas = document.getElementById('sky-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const W = canvas.width, H = canvas.height;
+
+  // Sky gradient
+  const sky = ctx.createLinearGradient(0,0,0,H);
+  sky.addColorStop(0,'#0d1520');
+  sky.addColorStop(1,'#1a2535');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0,0,W,H);
+
+  // Stars
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  for(let i=0;i<80;i++){
+    ctx.beginPath();
+    ctx.arc(Math.random()*W, Math.random()*H*0.6, Math.random()*1.2, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // Moon glow
+  const mg = ctx.createRadialGradient(W*0.8,H*0.15,0,W*0.8,H*0.15,80);
+  mg.addColorStop(0,'rgba(200,169,110,0.12)');
+  mg.addColorStop(1,'transparent');
+  ctx.fillStyle = mg;
+  ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(255,235,190,0.7)';
+  ctx.beginPath();
+  ctx.arc(W*0.8,H*0.15,8,0,Math.PI*2);
+  ctx.fill();
+
+  // Buildings
+  const blds = [
+    {x:0.02,w:0.06,h:0.55,win:true},
+    {x:0.07,w:0.04,h:0.38,win:true},
+    {x:0.10,w:0.08,h:0.72,win:true},
+    {x:0.17,w:0.05,h:0.48,win:true},
+    {x:0.21,w:0.1,h:0.90,win:true},
+    {x:0.30,w:0.06,h:0.65,win:true},
+    {x:0.35,w:0.05,h:0.45,win:true},
+    {x:0.39,w:0.09,h:0.82,win:true},
+    {x:0.47,w:0.06,h:0.58,win:true},
+    {x:0.52,w:0.05,h:0.42,win:true},
+    {x:0.56,w:0.11,h:0.95,win:true},
+    {x:0.66,w:0.07,h:0.70,win:true},
+    {x:0.72,w:0.05,h:0.50,win:true},
+    {x:0.76,w:0.08,h:0.80,win:true},
+    {x:0.83,w:0.06,h:0.60,win:true},
+    {x:0.88,w:0.04,h:0.40,win:true},
+    {x:0.91,w:0.09,h:0.85,win:true},
+  ];
+
+  blds.forEach(b => {
+    const bx = b.x*W, bw = b.w*W, bh = b.h*H, by = H-bh;
+    // Building body
+    const bg = ctx.createLinearGradient(bx,by,bx+bw,by+bh);
+    bg.addColorStop(0,'rgba(30,45,65,0.95)');
+    bg.addColorStop(1,'rgba(15,22,35,0.95)');
+    ctx.fillStyle = bg;
+    ctx.beginPath();
+    ctx.roundRect(bx,by,bw,bh,3);
+    ctx.fill();
+    // Windows
+    if(b.win){
+      const ww=Math.max(3,bw*0.18), wh=Math.max(3,bw*0.12), gx=bw*0.22, gy=Math.max(6,bh*0.05);
+      const cols=Math.floor((bw-gx)/(ww+gx));
+      const rows=Math.floor((bh-gy*3)/(wh+gy));
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+          if(Math.random()>0.35){
+            ctx.fillStyle=Math.random()>0.3?'rgba(255,210,100,0.55)':'rgba(150,190,255,0.35)';
+            ctx.fillRect(bx+gx+c*(ww+gx), by+gy*2+r*(wh+gy), ww, wh);
+          }
+        }
+      }
+    }
+    // Outline
+    ctx.strokeStyle='rgba(255,255,255,0.05)';
+    ctx.lineWidth=0.5;
+    ctx.stroke();
+  });
+
+  // Ground reflection
+  const ref = ctx.createLinearGradient(0,H*0.85,0,H);
+  ref.addColorStop(0,'rgba(255,180,60,0.0)');
+  ref.addColorStop(1,'rgba(255,180,60,0.04)');
+  ctx.fillStyle=ref;
+  ctx.fillRect(0,H*0.85,W,H*0.15);
+
+  // Fog bottom
+  const fog = ctx.createLinearGradient(0,H*0.7,0,H);
+  fog.addColorStop(0,'transparent');
+  fog.addColorStop(1,'rgba(14,21,32,0.6)');
+  ctx.fillStyle=fog;
+  ctx.fillRect(0,0,W,H);
+}
+
+// ── COUNTERS ──
+function runCounters() {
+  function count(id, target, suffix, dur) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let v=0, step=target/(dur/16);
+    const iv = setInterval(()=>{
+      v += step;
+      if(v>=target){el.textContent=target+suffix;clearInterval(iv);return;}
+      el.textContent=Math.floor(v)+suffix;
+    },16);
+  }
+  count('s1',34,'',900);
+  count('s2',49,'K',800);
+  count('s3',256,'M',1100);
+}
+
+// ── TABS (LOGIN) ──
+function switchTab(tab) {
+  document.getElementById('login-success').style.display='none';
+  document.getElementById('login-form').style.display = tab==='login'?'block':'none';
+  document.getElementById('register-form').style.display = tab==='register'?'block':'none';
+  document.querySelectorAll('.ltab').forEach((t,i)=>{
+    t.classList.toggle('active',(i===0&&tab==='login')||(i===1&&tab==='register'));
+  });
+}
+
+// ── LOGIN ──
+function doLogin() {
+  const email = document.getElementById('l-email').value;
+  const pass = document.getElementById('l-pass').value;
+  if(!email||!pass){showToast('Please fill in all fields');return;}
+  document.getElementById('login-form').style.display='none';
+  document.getElementById('login-success').style.display='block';
+  setTimeout(()=>goTo('home'),2500);
+}
+
+function doRegister() {
+  const first = document.getElementById('r-first').value;
+  const email = document.getElementById('r-email').value;
+  const pass = document.getElementById('r-pass').value;
+  if(!first||!email||!pass){showToast('Please fill required fields');return;}
+  document.getElementById('register-form').style.display='none';
+  document.getElementById('login-success').style.display='block';
+  setTimeout(()=>goTo('home'),2500);
+}
+
+// ── MODAL ──
+function openModal(id) {
+  document.getElementById('modal-'+id).classList.add('open');
+}
+function closeModalById(id) {
+  document.getElementById('modal-'+id).classList.remove('open');
+}
+function closeModal(e) {
+  if(e.target.classList.contains('modal-overlay')) e.target.classList.remove('open');
+}
+function submitContact() {
+  const name = document.getElementById('m-name').value;
+  const email = document.getElementById('m-email').value;
+  if(!name||!email){showToast('Please fill in your name and email');return;}
+  closeModalById('contact');
+  showToast('Message sent! We\'ll be in touch within 24 hours.');
+}
+
+// ── PORTFOLIO FILTER ──
+function filterPort(btn, cat) {
+  document.querySelectorAll('.filt-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.port-item').forEach(item=>{
+    item.style.opacity = (cat==='all'||item.dataset.cat===cat)?'1':'0.25';
+    item.style.transform = (cat==='all'||item.dataset.cat===cat)?'':'scale(0.96)';
+  });
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '✓  ' + msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── INIT ──
+window.onload = () => {
+  drawSkyline();
+  runCounters();
+  triggerVisible();
+  window.addEventListener('resize', drawSkyline);
+};
+</script>
+</body>
+</html>
